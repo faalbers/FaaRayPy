@@ -13,16 +13,13 @@ PYBIND11_MODULE(faaray_bindings, m)
     py::class_<FaaRay::RenderJob>( m, "RenderJob" )
         .def(py::init())
         .def("render", &FaaRay::RenderJob::render)
-        .def("setViewPlane", [](FaaRay::RenderJob &self, FaaRay::ViewPlane &vp) {
-                FaaRay::ViewPlaneSPtr vpSPtr(&vp);
-                self.setViewPlaneSPtr(vpSPtr);
-            })
+        .def("setViewPlane", &FaaRay::RenderJob::setViewPlaneSPtr)
         .def("getScene", &FaaRay::RenderJob::getSceneSPtr)
         .def("setMultiThread", &FaaRay::RenderJob::setMultiThread)
         .def("setOneThread", &FaaRay::RenderJob::setOneThread)
         ;
     
-    py::class_<FaaRay::Scene> ( m, "Scene" )
+    py::class_<FaaRay::Scene, FaaRay::SceneSPtr> ( m, "Scene" )
         .def(py::init())
         .def("setCamera", &FaaRay::Scene::setCamera)
         .def("setTracer", &FaaRay::Scene::setTracer)
@@ -31,7 +28,7 @@ PYBIND11_MODULE(faaray_bindings, m)
         .def("addObject", &FaaRay::Scene::addObject)
         ;
 
-    py::class_<FaaRay::ViewPlane>( m, "ViewPlane" )
+    py::class_<FaaRay::ViewPlane, FaaRay::ViewPlaneSPtr>( m, "ViewPlane" )
         .def(py::init<GFA::Size, GFA::Size>())
         .def("setNumSamples", &FaaRay::ViewPlane::setNumSamples)
         .def("numSamples", &FaaRay::ViewPlane::numSamples)

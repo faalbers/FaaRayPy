@@ -19,6 +19,7 @@ PYBIND11_MODULE(faaray_bindings, m)
             })
         .def("getScene", &FaaRay::RenderJob::getSceneSPtr)
         .def("setMultiThread", &FaaRay::RenderJob::setMultiThread)
+        .def("setOneThread", &FaaRay::RenderJob::setOneThread)
         ;
     
     py::class_<FaaRay::Scene> ( m, "Scene" )

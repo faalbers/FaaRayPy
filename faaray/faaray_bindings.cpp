@@ -1,22 +1,47 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/numpy.h>
 #include "FaaRay.hpp"
 #include <memory>
 #include <string>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 
 namespace py = pybind11;
+
+// function to fetch framebuffer in RenderJob and convert to NumPy so cv2 can handle it
+py::array makeImage(FaaRay::RenderJobSPtr renderJobSPtr)
+{
+    FaaRay::ViewPlaneSPtr vp(renderJobSPtr->getViewPlaneSPtr());
+    auto out = std::vector<std::vector<uint8_t>>();
+    for (GFA::Index i = 0; i < vp->width(); i++) {
+        out.push_back(std::vector<uint8_t>(vp->height()));
+    }
+    for (GFA::Index i = 0; i < vp->width(); i++) {
+        for (GFA::Index j = 0; j < vp->height(); j++) {
+            out[i][j] = (uint8_t) (std::max(std::min(vp->getPixel(i, j).r, 1.0), 0.0) * 255.0);
+        }
+    }
+    return py::cast(out);
+}
 
 PYBIND11_MODULE(faaray_bindings, m)
 {
     m.doc() = "faaray ray tracing library";
     
-    py::class_<FaaRay::RenderJob>( m, "RenderJob" )
+    m.def("makeImage", makeImage);
+
+    py::class_<FaaRay::RenderJob, FaaRay::RenderJobSPtr>( m, "RenderJob" )
         .def(py::init())
         .def("render", &FaaRay::RenderJob::render)
         .def("setViewPlane", &FaaRay::RenderJob::setViewPlaneSPtr)
         .def("getScene", &FaaRay::RenderJob::getSceneSPtr)
         .def("setMultiThread", &FaaRay::RenderJob::setMultiThread)
         .def("setOneThread", &FaaRay::RenderJob::setOneThread)
+        .def("makeImage", [](FaaRay::RenderJobSPtr &self) {
+                return makeImage(self);
+            })
         ;
     
     py::class_<FaaRay::Scene, FaaRay::SceneSPtr> ( m, "Scene" )

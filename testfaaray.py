@@ -1,4 +1,4 @@
-import faaray, sys
+import faaray, sys, cv2
 
 rj = faaray.RenderJob()
 vp = faaray.ViewPlane(500, 500)
@@ -50,6 +50,12 @@ sc.addObject(spA)
 
 rj.render()
 
-print('Render Done !')
+#im = faaray.Image(rj)
+#cv2.imwrite('image.jpg', im.makeImage())
+
+#cv2.imwrite('image.jpg', faaray.makeImage(rj))
+cv2.imwrite('image.jpg', rj.makeImage())
+
+#print('Render Done !')
 
 sys.exit(0)

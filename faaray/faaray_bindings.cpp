@@ -15,12 +15,12 @@ py::array makeImage(FaaRay::RenderJobSPtr renderJobSPtr)
 {
     FaaRay::ViewPlaneSPtr vp(renderJobSPtr->getViewPlaneSPtr());
     auto out = std::vector<std::vector<uint8_t>>();
-    for (GFA::Index i = 0; i < vp->width(); i++) {
-        out.push_back(std::vector<uint8_t>(vp->height()));
+    for (GFA::Index y = 0; y < vp->height(); y++) {
+        out.push_back(std::vector<uint8_t>(vp->width()));
     }
-    for (GFA::Index i = 0; i < vp->width(); i++) {
-        for (GFA::Index j = 0; j < vp->height(); j++) {
-            out[i][j] = (uint8_t) (std::max(std::min(vp->getPixel(i, j).r, 1.0), 0.0) * 255.0);
+    for (GFA::Index y = 0; y < vp->height(); y++) {
+        for (GFA::Index x = 0; x < vp->width(); x++) {
+            out[y][x] = (uint8_t) (std::max(std::min(vp->getPixel(x, vp->height()-y-1).r, 1.0), 0.0) * 255.0);
         }
     }
     return py::cast(out);

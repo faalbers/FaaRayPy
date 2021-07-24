@@ -1,18 +1,18 @@
 import faaray, sys, cv2
 
 rj = faaray.RenderJob()
-vp = faaray.ViewPlane(500, 500)
+vp = faaray.ViewPlane(800, 500)
 rj.setViewPlane(vp)
 #rj.setOneThread()
 rj.setMultiThread()
-vp.setNumSamples(500)
+vp.setNumSamples(16)
 sc = rj.getScene()
 
 
 pc = faaray.PinholeCamera()
 pc.setEye(0, 0, 20)
-pc.setLookAt(0, 0, 20)
-pc.setViewPlaneDistance(10)
+pc.setLookAt(0, 0, 0)
+pc.setViewPlaneDistance(15)
 pc.setZoom(10)
 sc.setCamera(pc)
 
@@ -24,18 +24,18 @@ al.setLs(0.05)
 sc.setAmbientLight(al)
 
 plA = faaray.PointLight()
-plA.setCenter(60, 200, 40)
+plA.setCenter(60, 60, 40)
 plA.setColor(1, 1, 0.3)
 plA.setRadiance(3);
 plA.castShadows(True)
 sc.addLight(plA)
 
-plB = faaray.PointLight()
-plB.setCenter(40, -40, 40)
-plB.setColor(0.3, 0.3, 1)
-plB.setRadiance(2)
-plB.castShadows(True)
-sc.addLight(plB)
+#plB = faaray.PointLight()
+#plB.setCenter(40, -40, 40)
+#plB.setColor(0.3, 0.3, 1)
+#plB.setRadiance(2)
+#plB.castShadows(True)
+#sc.addLight(plB)
 
 mmA = faaray.MatteMaterial()
 mmA.setCd(1.0, 1.0, 1.0)

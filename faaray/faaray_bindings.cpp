@@ -106,10 +106,24 @@ PYBIND11_MODULE(faaray_bindings, m)
 
     py::class_<FaaRay::MatteMaterial, FaaRay::Material, FaaRay::MatteMaterialSPtr> ( m, "MatteMaterial" )
         .def(py::init())
+        .def("setKd", &FaaRay::MatteMaterial::setKd)
+        // static_cast because it is an overloaded member function
         .def("setCd",
             static_cast<void (FaaRay::MatteMaterial::*)(const GFA::Scalar&, const GFA::Scalar&, const GFA::Scalar&)>(&FaaRay::MatteMaterial::setCd))
         ;
     
+    py::class_<FaaRay::PhongMaterial, FaaRay::Material, FaaRay::PhongMaterialSPtr> ( m, "PhongMaterial" )
+        .def(py::init())
+        .def("setKd", &FaaRay::PhongMaterial::setKd)
+        .def("setKs", &FaaRay::PhongMaterial::setKs)
+        .def("setExp", &FaaRay::PhongMaterial::setExp)
+        // static_cast because it is an overloaded member function
+        .def("setCd",
+            static_cast<void (FaaRay::PhongMaterial::*)(const GFA::Scalar&, const GFA::Scalar&, const GFA::Scalar&)>(&FaaRay::PhongMaterial::setCd))
+        .def("setCs",
+            static_cast<void (FaaRay::PhongMaterial::*)(const GFA::Scalar&, const GFA::Scalar&, const GFA::Scalar&)>(&FaaRay::PhongMaterial::setCs))
+        ;
+
     // this and the additional variable to py::class_<FaaRay::Spere, ...
     // needs to be done to make sure FaaRay::Scene::addObject works
     py::class_<FaaRay::GeometricObject, FaaRay::GeometricObjectSPtr>(m, "GeometricObject");
@@ -119,6 +133,22 @@ PYBIND11_MODULE(faaray_bindings, m)
         .def("setCenter", &FaaRay::Sphere::setCenter)
         .def("setRadius", &FaaRay::Sphere::setRadius)
         .def("setMaterial", &FaaRay::Sphere::setMaterialSPtr)
+        ;
+
+    py::class_<FaaRay::Plane, FaaRay::GeometricObject, FaaRay::PlaneSPtr> ( m, "Plane" )
+        .def(py::init())
+        .def("setCenter", &FaaRay::Plane::setCenter)
+        .def("setNormal", &FaaRay::Plane::setNormal)
+        .def("setMaterial", &FaaRay::Plane::setMaterialSPtr)
+        ;
+
+    py::class_<FaaRay::OpenCylinder, FaaRay::GeometricObject, FaaRay::OpenCylinderSPtr> ( m, "OpenCylinder" )
+        .def(py::init())
+        .def("setCenter", &FaaRay::OpenCylinder::setCenter)
+        .def("setBottom", &FaaRay::OpenCylinder::setBottom)
+        .def("setTop", &FaaRay::OpenCylinder::setTop)
+        .def("setRadius", &FaaRay::OpenCylinder::setRadius)
+        .def("setMaterial", &FaaRay::OpenCylinder::setMaterialSPtr)
         ;
 
 }

@@ -14,13 +14,17 @@ namespace py = pybind11;
 py::array makeImage(FaaRay::RenderJobSPtr renderJobSPtr)
 {
     FaaRay::ViewPlaneSPtr vp(renderJobSPtr->getViewPlaneSPtr());
-    auto out = std::vector<std::vector<uint8_t>>();
+    auto out = std::vector<std::vector<std::vector<uint8_t>>>();
     for (GFA::Index y = 0; y < vp->height(); y++) {
-        out.push_back(std::vector<uint8_t>(vp->width()));
-    }
-    for (GFA::Index y = 0; y < vp->height(); y++) {
+        out.push_back(std::vector<std::vector<uint8_t>>());
         for (GFA::Index x = 0; x < vp->width(); x++) {
-            out[y][x] = (uint8_t) (std::max(std::min(vp->getPixel(x, vp->height()-y-1).r, 1.0), 0.0) * 255.0);
+            out.back().push_back(std::vector<uint8_t>());
+            out.back().back().push_back(
+                (uint8_t) (std::max(std::min(vp->getPixel(x, vp->height()-y-1).b, 1.0), 0.0) * 255.0));
+            out.back().back().push_back(
+                (uint8_t) (std::max(std::min(vp->getPixel(x, vp->height()-y-1).g, 1.0), 0.0) * 255.0));
+            out.back().back().push_back(
+                (uint8_t) (std::max(std::min(vp->getPixel(x, vp->height()-y-1).r, 1.0), 0.0) * 255.0));
         }
     }
     return py::cast(out);
@@ -42,8 +46,11 @@ PYBIND11_MODULE(faaray_bindings, m)
         .def("makeImage", [](FaaRay::RenderJobSPtr &self) {
                 return makeImage(self);
             })
+        .def_property_readonly("image", [](FaaRay::RenderJobSPtr &self) {
+                return makeImage(self);
+            })
         ;
-    
+
     py::class_<FaaRay::Scene, FaaRay::SceneSPtr> ( m, "Scene" )
         .def(py::init())
         .def("setCamera", &FaaRay::Scene::setCamera)

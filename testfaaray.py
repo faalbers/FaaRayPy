@@ -87,12 +87,8 @@ sc.addObject(cyA)
 
 rj.render()
 
-#im = faaray.Image(rj)
-#cv2.imwrite('image.jpg', im.makeImage())
+cv2.imwrite('image.png', rj.image)
 
-#cv2.imwrite('image.jpg', faaray.makeImage(rj))
-cv2.imwrite('image.jpg', rj.makeImage())
-
-#print('Render Done !')
+print('Render Done !')
 
 sys.exit(0)

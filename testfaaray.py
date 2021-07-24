@@ -30,12 +30,12 @@ plA.setRadiance(3);
 plA.castShadows(True)
 sc.addLight(plA)
 
-#plB = faaray.PointLight()
-#plB.setCenter(40, -40, 40)
-#plB.setColor(0.3, 0.3, 1)
-#plB.setRadiance(2)
-#plB.castShadows(True)
-#sc.addLight(plB)
+plB = faaray.PointLight()
+plB.setCenter(40, -40, 40)
+plB.setColor(0.3, 0.3, 1)
+plB.setRadiance(2)
+plB.castShadows(True)
+sc.addLight(plB)
 
 mmA = faaray.MatteMaterial()
 mmA.setCd(1.0, 1.0, 1.0)

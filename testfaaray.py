@@ -85,6 +85,13 @@ cyA.setRadius(4)
 cyA.setMaterial(pmB)
 sc.addObject(cyA)
 
+diA = faaray.Disc()
+diA.setCenter(0, 4, 0)
+diA.setNormal(0, 1, 0)
+diA.setRadius(6)
+diA.setMaterial(pmB)
+sc.addObject(diA)
+
 rj.render()
 
 cv2.imwrite('image.png', rj.image)

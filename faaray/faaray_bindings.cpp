@@ -148,6 +148,14 @@ PYBIND11_MODULE(faaray_bindings, m)
         .def("setNormal", &FaaRay::Plane::setNormal)
         .def("setMaterial", &FaaRay::Plane::setMaterialSPtr)
         ;
+    
+    py::class_<FaaRay::Disc, FaaRay::GeometricObject, FaaRay::DiscSPtr> ( m, "Disc" )
+        .def(py::init())
+        .def("setCenter", &FaaRay::Disc::setCenter)
+        .def("setNormal", &FaaRay::Disc::setNormal)
+        .def("setRadius", &FaaRay::Disc::setRadius)
+        .def("setMaterial", &FaaRay::Disc::setMaterialSPtr)
+        ;
 
     py::class_<FaaRay::OpenCylinder, FaaRay::GeometricObject, FaaRay::OpenCylinderSPtr> ( m, "OpenCylinder" )
         .def(py::init())

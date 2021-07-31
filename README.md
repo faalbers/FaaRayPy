@@ -1,4 +1,4 @@
-# FaaRayGUI
+# FaaRayPy
 
 Python wrapper using
 [FaaRay](https://github.com/faalbers/FaaRay)

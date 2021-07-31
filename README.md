@@ -19,7 +19,7 @@ ctrl+sht+p -> Git: Clone (Recursive)
 ### build
 
 ```
-cd FaaRay
+cd FaaRayPy
 cmake -B build -D CMAKE_BUILD_TYPE:STRING=Release
 cmake --build build --config Release --target install -j 10 --
 ```

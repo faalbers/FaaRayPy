@@ -1,14 +1,30 @@
-cloning FaaRayPy:
-git clone --recursive -b stable https://github.com/faalbers/FaaRayPy.git
-in vscode: ctrl+sht+p Git: Clone (Recursive)
+# FaaRayGUI
 
-adding pybind11 as submodel:
-git submodule add -b stable ../../pybind/pybind11 extern/pybind11
-git submodule update --init --recursive
+Python wrapper using
+[FaaRay](https://github.com/faalbers/FaaRay)
+ray trace rendering library.
 
-To build I used Visual Studios Build Tools, MINGW 64 did not seem to work well
-git clone --recursive -b stable https://github.com/faalbers/FaaRayPy.git
-cd FaaRayPy
-cmake -DCMAKE_BUILD_TYPE:STRING=Release -G "Visual Studio 16 2019" -H. -B./build
-cmake --build ./build --config Release --target install -j 10 --
-python testfaaray.py
+### git clone:
+
+```
+git clone --recursive https://github.com/faalbers/FaaRayPy.git
+```
+
+### git clone in vscode:
+
+```
+ctrl+sht+p -> Git: Clone (Recursive)
+```
+
+### build
+
+```
+cd FaaRay
+cmake -B build
+cmake --build build --config Release --target install -j 10 --
+```
+
+### run python test to render and safe an image
+```
+python testfaaray
+```

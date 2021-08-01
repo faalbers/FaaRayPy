@@ -7,7 +7,7 @@ ray trace rendering library.
 ### git clone:
 
 ```
-git clone --recursive https://github.com/faalbers/FaaRayPy.git
+git clone --recursive -b stable https://github.com/faalbers/FaaRayPy.git
 ```
 
 ### git clone in vscode:
